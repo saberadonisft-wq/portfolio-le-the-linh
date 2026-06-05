@@ -6,585 +6,831 @@
 <title>Portfolio – Lê Thế Linh | 25020235</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #0f0e0d;
-    --paper: #f5f0e8;
-    --cream: #ede8dc;
-    --rust: #b5451b;
-    --gold: #c9a84c;
-    --slate: #4a5568;
-    --muted: #8a8070;
-    --line: rgba(15,14,13,0.12);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-size: 18px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0; z-index: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 4rem;
-    background: rgba(245,240,232,0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .nav-links {
-    display: flex; gap: 2.5rem; list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--slate);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--rust); }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 8rem 4rem 4rem;
-    overflow: hidden;
-  }
-
-  .hero-bg-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(8rem, 20vw, 22rem);
-    font-weight: 900;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(15,14,13,0.06);
-    white-space: nowrap;
-    user-select: none;
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    text-align: center;
-    max-width: 860px;
-  }
-
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    color: var(--rust);
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    display: flex; align-items: center; justify-content: center; gap: 1rem;
-  }
-
-  .hero-eyebrow::before,
-  .hero-eyebrow::after {
-    content: '';
-    display: block;
-    width: 40px; height: 1px;
-    background: var(--rust);
-  }
-
-  .hero-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
-  }
-
-  .hero-name em {
-    font-style: italic;
-    color: var(--rust);
-  }
-
-  .hero-id {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 2rem;
-  }
-
-  .hero-desc {
-    font-size: 1.15rem;
-    color: var(--slate);
-    max-width: 560px;
-    margin: 0 auto 3rem;
-    font-style: italic;
-    font-weight: 300;
-  }
-
-  .hero-tags {
-    display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
-    margin-bottom: 3rem;
-  }
-
-  .tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.4rem 1rem;
-    border: 1px solid var(--line);
-    color: var(--slate);
-    border-radius: 0;
-  }
-
-  .hero-scroll {
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    text-transform: uppercase;
-    animation: bounce 2s ease-in-out infinite;
-  }
-
-  .scroll-line {
-    width: 1px; height: 48px; background: var(--muted);
-    animation: extend 2s ease-in-out infinite;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(8px); }
-  }
-
-  /* ── SECTION COMMONS ── */
-  section {
-    position: relative;
-    padding: 7rem 4rem;
-    border-top: 1px solid var(--line);
-  }
-
-  .section-header {
-    display: flex; align-items: baseline; gap: 1.5rem;
-    margin-bottom: 4rem;
-  }
-
-  .section-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--rust);
-    letter-spacing: 0.12em;
-    flex-shrink: 0;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-
-  .section-rule {
-    flex: 1;
-    height: 1px;
-    background: var(--line);
-  }
-
-  /* ── ABOUT ── */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
-
-  .about-text p { margin-bottom: 1.2rem; color: var(--slate); }
-  .about-text p:first-child { color: var(--ink); font-size: 1.2rem; font-weight: 400; }
-
-  .about-info {
-    display: flex; flex-direction: column; gap: 0;
-    border: 1px solid var(--line);
-  }
-
-  .info-row {
-    display: flex;
-    border-bottom: 1px solid var(--line);
-  }
-  .info-row:last-child { border-bottom: none; }
-
-  .info-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 1rem 1.2rem;
-    width: 140px;
-    flex-shrink: 0;
-    border-right: 1px solid var(--line);
-    display: flex; align-items: center;
-  }
-
-  .info-value {
-    padding: 1rem 1.2rem;
-    font-size: 0.95rem;
-    color: var(--ink);
-    display: flex; align-items: center;
-  }
-
-  .info-value a {
-    color: var(--rust);
-    text-decoration: none;
-  }
-
-  .portfolio-goal {
-    margin-top: 2.5rem;
-    padding: 1.8rem;
-    background: var(--cream);
-    border-left: 3px solid var(--rust);
-  }
-
-  .portfolio-goal .goal-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--rust);
-    margin-bottom: 0.6rem;
-  }
-
-  .portfolio-goal p {
-    font-style: italic;
-    color: var(--slate) !important;
-    font-size: 1rem !important;
-    margin: 0 !important;
-  }
-
-  /* ── TASKS GRID ── */
-  .tasks-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid var(--line);
-  }
-
-  .task-card {
-    padding: 2.5rem 2rem;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    transition: background 0.3s;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .task-card:nth-child(3n) { border-right: none; }
-  .task-card:nth-child(n+4) { border-bottom: none; }
-
-  .task-card:hover { background: var(--cream); }
-
-  .task-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    color: var(--rust);
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .task-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    display: block;
-    line-height: 1;
-  }
-
-  .task-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-    line-height: 1.2;
-  }
-
-  .task-desc {
-    font-size: 0.88rem;
-    color: var(--slate);
-    line-height: 1.5;
-    margin-bottom: 1.2rem;
-  }
-
-  .task-highlight {
-    display: flex; flex-direction: column; gap: 0.3rem;
-  }
-
-  .task-highlight span {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    padding: 0.25rem 0.6rem;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    display: inline-block;
-    width: fit-content;
-  }
-
-  .task-arrow {
-    font-size: 0.9rem;
-    color: var(--rust);
-    margin-top: 1.2rem;
-    display: block;
-    transition: transform 0.2s;
-  }
-
-  .task-card:hover .task-arrow { transform: translateX(4px); }
-
-  /* ── DETAIL SECTIONS ── */
-  .detail-block {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 4rem;
-    padding: 4rem 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .detail-block:last-child { border-bottom: none; }
-
-  .detail-meta {
-    position: sticky;
-    top: 6rem;
-    align-self: start;
-  }
-
-  .detail-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--rust);
-    margin-bottom: 0.8rem;
-  }
-
-  .detail-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .detail-link {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--rust);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rust);
-    padding-bottom: 0.1rem;
-    transition: opacity 0.2s;
-  }
-
-  .detail-link:hover { opacity: 0.7; }
-
-  .detail-content h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.6rem;
-    margin-top: 1.8rem;
-    color: var(--ink);
-  }
-
-  .detail-content h4:first-child { margin-top: 0; }
-
-  .detail-content p {
-    color: var(--slate);
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .detail-content ul {
-    padding-left: 1.2rem;
-    color: var(--slate);
-    font-size: 0.95rem;
-  }
-
-  .detail-content li { margin-bottom: 0.4rem; }
-
-  .highlight-box {
-    background: var(--cream);
-    border-left: 3px solid var(--gold);
-    padding: 1.2rem 1.4rem;
-    margin: 1.2rem 0;
-    font-style: italic;
-    color: var(--slate);
-    font-size: 0.95rem;
-  }
-
-  /* ── REFLECTION ── */
-  .reflection-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-    border: 1px solid var(--line);
-    margin-bottom: 4rem;
-  }
-
-  .reflection-card {
-    padding: 2.5rem 2rem;
-    border-right: 1px solid var(--line);
-  }
-
-  .reflection-card:last-child { border-right: none; }
-
-  .reflection-icon { font-size: 1.5rem; margin-bottom: 1rem; display: block; }
-
-  .reflection-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-  }
-
-  .reflection-card p {
-    font-size: 0.9rem;
-    color: var(--slate);
-    line-height: 1.6;
-  }
-
-  .big-quote {
-    padding: 4rem;
-    background: var(--cream);
-    border: 1px solid var(--line);
-    text-align: center;
-    position: relative;
-  }
-
-  .big-quote::before {
-    content: '"';
-    font-family: 'Playfair Display', serif;
-    font-size: 10rem;
-    color: rgba(15,14,13,0.06);
-    position: absolute;
-    top: -1rem;
-    left: 2rem;
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .big-quote blockquote {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    font-style: italic;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--ink);
-    max-width: 720px;
-    margin: 0 auto 1.5rem;
-  }
-
-  .big-quote cite {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 3rem 4rem;
-    border-top: 1px solid var(--line);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-
-  .footer-left {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .footer-right {
-    font-family: 'Crimson Pro', serif;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-
-  /* ── ANIMATIONS ── */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: 1.2rem; }
-    section { padding: 4rem 1.5rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .tasks-grid { grid-template-columns: 1fr; }
-    .task-card { border-right: none !important; }
-    .task-card:last-child { border-bottom: none; }
-    .detail-block { grid-template-columns: 1fr; gap: 2rem; }
-    .detail-meta { position: static; }
-    .reflection-grid { grid-template-columns: 1fr; }
-    .reflection-card { border-right: none; border-bottom: 1px solid var(--line); }
-    .reflection-card:last-child { border-bottom: none; }
-    .big-quote { padding: 2.5rem 1.5rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
-  }
+:root {
+  --ink: #0f0e0d;
+  --paper: #f5f0e8;
+  --cream: #ede8dc;
+  --rust: #b5451b;
+  --rust-light: #d4613a;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --slate: #4a5568;
+  --muted: #8a8070;
+  --line: rgba(15,14,13,0.12);
+  --shadow: 0 20px 60px rgba(181,69,27,0.12);
+  --shadow-sm: 0 4px 20px rgba(15,14,13,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* GRAIN */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 4rem;
+  background: rgba(245,240,232,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+
+.nav-dot {
+  width: 6px; height: 6px;
+  background: var(--rust);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0; right: 100%;
+  height: 1px; background: var(--rust);
+  transition: right 0.3s ease;
+}
+
+.nav-links a:hover { color: var(--rust); }
+.nav-links a:hover::after { right: 0; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 8rem 4rem 4rem;
+  overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 80% 80%, rgba(181,69,27,0.07) 0%, transparent 60%),
+              var(--paper);
+}
+
+/* Decorative circles */
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border: 1px solid rgba(181,69,27,0.08);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotate 40s linear infinite;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 900px; height: 900px;
+  border: 1px solid rgba(201,168,76,0.05);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotate 60s linear infinite reverse;
+}
+
+@keyframes rotate {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+.hero-bg-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(10rem, 25vw, 28rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(15,14,13,0.045);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.04em;
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  max-width: 860px;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  color: var(--rust);
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  display: flex; align-items: center; justify-content: center; gap: 1.2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.2s forwards;
+}
+
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rust));
+}
+
+.hero-eyebrow::after { background: linear-gradient(90deg, var(--rust), transparent); }
+
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.6rem;
+  opacity: 0;
+  animation: fadeUp 0.9s ease 0.35s forwards;
+}
+
+.hero-name em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--rust), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-id {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  margin-bottom: 2.2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.5s forwards;
+}
+
+.hero-desc {
+  font-size: 1.15rem;
+  color: var(--slate);
+  max-width: 540px;
+  margin: 0 auto 3rem;
+  font-style: italic;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.6s forwards;
+}
+
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+  margin-bottom: 3.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.75s forwards;
+}
+
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid rgba(181,69,27,0.25);
+  color: var(--rust);
+  background: rgba(181,69,27,0.04);
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+  cursor: default;
+}
+
+.tag:hover {
+  background: rgba(181,69,27,0.1);
+  border-color: var(--rust);
+  transform: translateY(-2px);
+}
+
+.hero-scroll {
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.9s forwards;
+}
+
+.scroll-line {
+  width: 1px; height: 52px;
+  background: linear-gradient(to bottom, var(--rust), transparent);
+  animation: growLine 2s ease-in-out infinite;
+}
+
+@keyframes growLine {
+  0%, 100% { transform: scaleY(1); opacity: 1; }
+  50% { transform: scaleY(0.6); opacity: 0.4; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SECTION COMMONS ── */
+section {
+  position: relative;
+  padding: 8rem 4rem;
+  border-top: 1px solid var(--line);
+}
+
+.section-header {
+  display: flex; align-items: center; gap: 1.5rem;
+  margin-bottom: 5rem;
+}
+
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--rust);
+  letter-spacing: 0.15em;
+  flex-shrink: 0;
+  background: rgba(181,69,27,0.08);
+  padding: 0.4rem 0.8rem;
+  border: 1px solid rgba(181,69,27,0.2);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.section-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+
+/* ── ABOUT ── */
+.about-section {
+  background: linear-gradient(180deg, var(--paper) 0%, rgba(237,232,220,0.4) 100%);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.about-text p { margin-bottom: 1.3rem; color: var(--slate); }
+.about-text p:first-child { color: var(--ink); font-size: 1.22rem; font-weight: 400; line-height: 1.6; }
+
+.about-info {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.info-row {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.2s;
+}
+
+.info-row:last-child { border-bottom: none; }
+.info-row:hover { background: rgba(181,69,27,0.03); }
+
+.info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 1rem 1.2rem;
+  width: 145px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--line);
+  display: flex; align-items: center;
+}
+
+.info-value {
+  padding: 1rem 1.2rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+  display: flex; align-items: center;
+}
+
+.info-value a {
+  color: var(--rust);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  transition: opacity 0.2s;
+}
+
+.info-value a:hover { opacity: 0.7; }
+
+.portfolio-goal {
+  margin-top: 2.5rem;
+  padding: 1.8rem 2rem;
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(181,69,27,0.06));
+  border-left: 3px solid var(--gold);
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-goal::before {
+  content: '✦';
+  position: absolute;
+  top: -0.5rem; right: 1.5rem;
+  font-size: 5rem;
+  color: rgba(201,168,76,0.07);
+  font-family: serif;
+}
+
+.portfolio-goal .goal-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.7rem;
+}
+
+.portfolio-goal p {
+  font-style: italic;
+  color: var(--slate) !important;
+  font-size: 1rem !important;
+  margin: 0 !important;
+  line-height: 1.65;
+}
+
+/* ── TASKS GRID ── */
+.tasks-section { background: var(--cream); }
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.task-card {
+  padding: 2.5rem 2rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rust), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+  border-color: rgba(181,69,27,0.2);
+}
+
+.task-card:hover::before { transform: scaleX(1); }
+
+.task-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--rust);
+  margin-bottom: 1.2rem;
+  display: block;
+  opacity: 0.8;
+}
+
+.task-icon {
+  font-size: 2.2rem;
+  margin-bottom: 1.1rem;
+  display: block;
+  line-height: 1;
+  filter: saturate(0.8);
+  transition: filter 0.25s, transform 0.25s;
+}
+
+.task-card:hover .task-icon { filter: saturate(1.2); transform: scale(1.1); }
+
+.task-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.task-desc {
+  font-size: 0.88rem;
+  color: var(--slate);
+  line-height: 1.55;
+  margin-bottom: 1.4rem;
+}
+
+.task-highlight {
+  display: flex; flex-direction: column; gap: 0.3rem;
+}
+
+.task-highlight span {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding: 0.28rem 0.65rem;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  display: inline-block;
+  width: fit-content;
+  transition: background 0.2s, color 0.2s;
+}
+
+.task-card:hover .task-highlight span {
+  background: rgba(181,69,27,0.06);
+  color: var(--rust);
+  border-color: rgba(181,69,27,0.2);
+}
+
+.task-arrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--rust);
+  margin-top: 1.4rem;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: gap 0.25s;
+}
+
+.task-card:hover .task-arrow { gap: 0.7rem; }
+
+/* ── DETAIL SECTIONS ── */
+.details-section {
+  background: linear-gradient(180deg, var(--paper) 0%, var(--cream) 100%);
+}
+
+.detail-block {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 5rem;
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.detail-block:last-child { border-bottom: none; }
+
+.detail-block::before {
+  content: '';
+  position: absolute;
+  left: 280px;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
+}
+
+.detail-meta {
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+  padding-right: 1rem;
+}
+
+.detail-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: white;
+  background: linear-gradient(135deg, var(--rust), #c96030);
+  padding: 0.35rem 0.8rem;
+  display: inline-block;
+  margin-bottom: 1.1rem;
+}
+
+.detail-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+}
+
+.detail-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rust);
+  text-decoration: none;
+  border: 1px solid rgba(181,69,27,0.3);
+  padding: 0.5rem 0.9rem;
+  background: rgba(181,69,27,0.04);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.detail-link:hover {
+  background: rgba(181,69,27,0.1);
+  border-color: var(--rust);
+  transform: translateX(3px);
+}
+
+.detail-content { padding-left: 3rem; }
+
+.detail-content h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  margin-top: 2rem;
+  color: var(--ink);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+
+.detail-content h4::before {
+  content: '';
+  display: block;
+  width: 16px; height: 2px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.detail-content h4:first-child { margin-top: 0; }
+
+.detail-content p {
+  color: var(--slate);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-content ul {
+  padding-left: 0;
+  color: var(--slate);
+  font-size: 0.95rem;
+  list-style: none;
+}
+
+.detail-content li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.3rem;
+  position: relative;
+}
+
+.detail-content li::before {
+  content: '→';
+  position: absolute; left: 0;
+  color: var(--rust);
+  font-size: 0.8rem;
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.07), rgba(181,69,27,0.05));
+  border: 1px solid rgba(201,168,76,0.3);
+  border-left: 3px solid var(--gold);
+  padding: 1.3rem 1.5rem;
+  margin: 1.4rem 0;
+  font-style: italic;
+  color: var(--slate);
+  font-size: 0.95rem;
+  position: relative;
+}
+
+/* ── REFLECTION ── */
+.reflection-section {
+  background: var(--ink);
+  color: var(--paper);
+  border-top: none;
+}
+
+.reflection-section .section-num {
+  color: var(--gold);
+  background: rgba(201,168,76,0.1);
+  border-color: rgba(201,168,76,0.25);
+}
+
+.reflection-section .section-title { color: var(--paper); }
+.reflection-section .section-rule { background: linear-gradient(90deg, rgba(245,240,232,0.15), transparent); }
+
+.reflection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 5rem;
+}
+
+.reflection-card {
+  padding: 2.8rem 2.2rem;
+  border: 1px solid rgba(245,240,232,0.12);
+  background: rgba(245,240,232,0.04);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.reflection-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--rust), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.reflection-card:hover {
+  background: rgba(245,240,232,0.08);
+  border-color: rgba(245,240,232,0.2);
+  transform: translateY(-4px);
+}
+
+.reflection-card:hover::after { transform: scaleX(1); }
+
+.reflection-icon { font-size: 1.8rem; margin-bottom: 1.2rem; display: block; }
+
+.reflection-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+  color: var(--paper);
+}
+
+.reflection-card p {
+  font-size: 0.9rem;
+  color: rgba(245,240,232,0.6);
+  line-height: 1.65;
+}
+
+.big-quote {
+  padding: 5rem 4rem;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(245,240,232,0.1);
+  background: rgba(245,240,232,0.03);
+  overflow: hidden;
+}
+
+.big-quote::before {
+  content: '"';
+  font-family: 'Playfair Display', serif;
+  font-size: 18rem;
+  color: rgba(245,240,232,0.03);
+  position: absolute;
+  top: -3rem; left: 1rem;
+  line-height: 1;
+  pointer-events: none;
+  font-style: normal;
+}
+
+.big-quote blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 2.8vw, 2rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--paper);
+  max-width: 760px;
+  margin: 0 auto 2rem;
+  position: relative;
+}
+
+.big-quote cite {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: rgba(245,240,232,0.35);
+  text-transform: uppercase;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 2.5rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(245,240,232,0.08);
+}
+
+.footer-left {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: rgba(245,240,232,0.3);
+  text-transform: uppercase;
+}
+
+.footer-right {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: rgba(245,240,232,0.3);
+}
+
+/* ── FADE IN ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── DECORATIVE DIVIDER ── */
+.ornament {
+  text-align: center;
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 0.5em;
+  margin: 0 0 4rem;
+  opacity: 0.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.5rem; }
+  section { padding: 5rem 1.8rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .tasks-grid { grid-template-columns: 1fr 1fr; }
+  .detail-block { grid-template-columns: 1fr; gap: 2.5rem; }
+  .detail-block::before { display: none; }
+  .detail-meta { position: static; }
+  .detail-content { padding-left: 0; }
+  .reflection-grid { grid-template-columns: 1fr; }
+  .big-quote { padding: 3rem 2rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .tasks-grid { grid-template-columns: 1fr; }
+  .hero-bg-text { font-size: 8rem; }
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">LTL · Portfolio Kỹ Thuật Số</div>
+  <div class="nav-logo"><span class="nav-dot"></span>LTL · Portfolio Kỹ Thuật Số</div>
   <ul class="nav-links">
     <li><a href="#about">Giới thiệu</a></li>
     <li><a href="#tasks">Dự án</a></li>
@@ -600,9 +846,7 @@
     <div class="hero-eyebrow">Nhập môn Công nghệ số &amp; Ứng dụng Trí tuệ Nhân tạo</div>
     <h1 class="hero-name">Lê Thế <em>Linh</em></h1>
     <p class="hero-id">MSSV: 25020235</p>
-    <p class="hero-desc">
-      Portfolio Kỹ thuật số — hành trình học tập, khám phá và ứng dụng công nghệ số trong thế giới AI.
-    </p>
+    <p class="hero-desc">Portfolio Kỹ thuật số — hành trình học tập, khám phá và ứng dụng công nghệ số trong thế giới AI.</p>
     <div class="hero-tags">
       <span class="tag">Quản lý tệp &amp; thư mục</span>
       <span class="tag">Tìm kiếm học thuật</span>
@@ -619,70 +863,42 @@
 </section>
 
 <!-- ABOUT -->
-<section id="about">
+<section id="about" class="about-section">
   <div class="section-header fade-in">
     <span class="section-num">01</span>
     <h2 class="section-title">Giới thiệu</h2>
     <div class="section-rule"></div>
   </div>
-
   <div class="about-grid">
     <div class="about-text fade-in">
       <p>Xin chào! Tôi là <strong>Lê Thế Linh</strong>, sinh viên ngành <strong>Công nghệ Thông tin</strong> tại Đại học Quốc gia Hà Nội.</p>
       <p>Portfolio này là tập hợp toàn bộ kết quả của môn học <em>Nhập môn Công nghệ số và Ứng dụng Trí tuệ Nhân tạo</em> — từ kỹ năng quản lý thông tin, tìm kiếm học thuật, viết Prompt hiệu quả, hợp tác nhóm trực tuyến, cho đến sáng tạo nội dung với AI và tư duy về đạo đức AI.</p>
       <p>Mỗi bài tập là một bước trưởng thành, không chỉ về kỹ năng kỹ thuật mà còn về tư duy phê phán và trách nhiệm số.</p>
-
       <div class="portfolio-goal">
-        <div class="goal-label">Mục tiêu Portfolio</div>
+        <div class="goal-label">✦ Mục tiêu Portfolio</div>
         <p>Thể hiện các kỹ năng số đã học, lưu trữ sản phẩm cá nhân để dễ dàng truy cập và chia sẻ, tạo nền tảng giới thiệu năng lực bản thân trong tương lai.</p>
       </div>
     </div>
-
     <div class="about-info fade-in">
-      <div class="info-row">
-        <span class="info-label">Họ và tên</span>
-        <span class="info-value">Lê Thế Linh</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">MSSV</span>
-        <span class="info-value" style="font-family:'DM Mono',monospace;font-size:0.85rem;">25020235</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Ngành học</span>
-        <span class="info-value">Công nghệ Thông tin</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Môn học</span>
-        <span class="info-value">Nhập môn CNSX &amp; ƯDTTNT</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Số bài tập</span>
-        <span class="info-value">7 bài (Tuần 1–7)</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Năm học</span>
-        <span class="info-value">2024–2025</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Báo cáo T1</span>
-        <span class="info-value"><a href="https://docs.google.com/document/d/1pOgMWMs8QVoI4exswHw1Re5Y3jsDlLWRNN3actwgpFM/edit?usp=sharing" target="_blank">Xem tài liệu →</a></span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Báo cáo T6</span>
-        <span class="info-value"><a href="https://docs.google.com/document/d/10Aek0x58hKTcxfDbZgPyv5cLWXrah2MSe6jAQepBiTE/edit?usp=sharing" target="_blank">Xem tài liệu →</a></span>
-      </div>
+      <div class="info-row"><span class="info-label">Họ và tên</span><span class="info-value">Lê Thế Linh</span></div>
+      <div class="info-row"><span class="info-label">MSSV</span><span class="info-value" style="font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.08em;">25020235</span></div>
+      <div class="info-row"><span class="info-label">Ngành học</span><span class="info-value">Công nghệ Thông tin</span></div>
+      <div class="info-row"><span class="info-label">Môn học</span><span class="info-value">Nhập môn CNSX &amp; ƯDTTNT</span></div>
+      <div class="info-row"><span class="info-label">Số bài tập</span><span class="info-value">7 bài (Tuần 1–7)</span></div>
+      <div class="info-row"><span class="info-label">Năm học</span><span class="info-value">2024–2025</span></div>
+      <div class="info-row"><span class="info-label">Báo cáo T1</span><span class="info-value"><a href="https://docs.google.com/document/d/1pOgMWMs8QVoI4exswHw1Re5Y3jsDlLWRNN3actwgpFM/edit?usp=sharing" target="_blank">Xem tài liệu →</a></span></div>
+      <div class="info-row"><span class="info-label">Báo cáo T6</span><span class="info-value"><a href="https://docs.google.com/document/d/10Aek0x58hKTcxfDbZgPyv5cLWXrah2MSe6jAQepBiTE/edit?usp=sharing" target="_blank">Xem tài liệu →</a></span></div>
     </div>
   </div>
 </section>
 
-<!-- TASKS OVERVIEW -->
-<section id="tasks">
+<!-- TASKS -->
+<section id="tasks" class="tasks-section">
   <div class="section-header fade-in">
     <span class="section-num">02</span>
     <h2 class="section-title">Các Nhiệm vụ Dự án</h2>
     <div class="section-rule"></div>
   </div>
-
   <div class="tasks-grid">
     <a class="task-card fade-in" href="#task1">
       <span class="task-num">TUẦN 1 · BÀI TẬP 01</span>
@@ -696,7 +912,6 @@
       </div>
       <span class="task-arrow">→ Xem chi tiết</span>
     </a>
-
     <a class="task-card fade-in" href="#task2">
       <span class="task-num">TUẦN 2 · BÀI TẬP 02</span>
       <span class="task-icon">🔍</span>
@@ -709,7 +924,6 @@
       </div>
       <span class="task-arrow">→ Xem chi tiết</span>
     </a>
-
     <a class="task-card fade-in" href="#task3">
       <span class="task-num">TUẦN 3 · BÀI TẬP 03</span>
       <span class="task-icon">✍️</span>
@@ -722,7 +936,6 @@
       </div>
       <span class="task-arrow">→ Xem chi tiết</span>
     </a>
-
     <a class="task-card fade-in" href="#task4">
       <span class="task-num">TUẦN 4 · BÀI TẬP 04</span>
       <span class="task-icon">🤝</span>
@@ -735,7 +948,6 @@
       </div>
       <span class="task-arrow">→ Xem chi tiết</span>
     </a>
-
     <a class="task-card fade-in" href="#task5">
       <span class="task-num">TUẦN 5 · BÀI TẬP 05</span>
       <span class="task-icon">🎨</span>
@@ -748,7 +960,6 @@
       </div>
       <span class="task-arrow">→ Xem chi tiết</span>
     </a>
-
     <a class="task-card fade-in" href="#task6">
       <span class="task-num">TUẦN 6 · BÀI TẬP 06</span>
       <span class="task-icon">⚖️</span>
@@ -765,14 +976,13 @@
 </section>
 
 <!-- DETAILS -->
-<section id="details">
+<section id="details" class="details-section">
   <div class="section-header fade-in">
     <span class="section-num">03</span>
     <h2 class="section-title">Chi tiết Từng Nhiệm vụ</h2>
     <div class="section-rule"></div>
   </div>
 
-  <!-- TASK 1 -->
   <div class="detail-block fade-in" id="task1">
     <div class="detail-meta">
       <div class="detail-badge">Tuần 1 · Nhiệm vụ 01</div>
@@ -782,24 +992,18 @@
     <div class="detail-content">
       <h4>Mô tả nhiệm vụ</h4>
       <p>Thiết kế cấu trúc thư mục tối ưu và quy tắc đặt tên nhất quán cho dữ liệu cá nhân, thể hiện sự hiểu sâu về tổ chức thông tin số.</p>
-
       <h4>Cấu trúc thư mục được thiết kế</h4>
       <ul>
         <li>Phân cấp theo năm học → học kỳ → môn học</li>
         <li>Tách riêng thư mục bài tập, tài liệu tham khảo, và nộp bài</li>
         <li>Sử dụng File Explorer trên Windows để minh họa</li>
       </ul>
-
-      <div class="highlight-box">
-        Quy tắc đặt tên: <strong>YYYY-MM-DD_MônHọc_TênTệp_vX.ext</strong> — đảm bảo sắp xếp theo thời gian và phân biệt rõ phiên bản.
-      </div>
-
+      <div class="highlight-box">Quy tắc đặt tên: <strong>YYYY-MM-DD_MônHọc_TênTệp_vX.ext</strong> — đảm bảo sắp xếp theo thời gian và phân biệt rõ phiên bản.</div>
       <h4>Kết quả đạt được</h4>
       <p>Cấu trúc khoa học, quy tắc đặt tên sáng tạo và nhất quán; mô tả thể hiện sự hiểu sâu sắc về tổ chức dữ liệu (hướng tới Mức 4 của Rubric).</p>
     </div>
   </div>
 
-  <!-- TASK 2 -->
   <div class="detail-block fade-in" id="task2">
     <div class="detail-meta">
       <div class="detail-badge">Tuần 2 · Nhiệm vụ 02</div>
@@ -809,24 +1013,18 @@
     <div class="detail-content">
       <h4>Chủ đề nghiên cứu</h4>
       <p>Đánh giá hiệu quả của các mô hình dựa trên kiến trúc Transformer trong bài toán <strong>Dịch máy hình ảnh đa ngôn ngữ</strong> (Multilingual Machine Translation of Images).</p>
-
       <h4>Chiến lược tìm kiếm</h4>
       <ul>
         <li>Sử dụng linh hoạt trên 4 toán tử: <code>site:</code>, <code>filetype:</code>, <code>intitle:</code>, <code>"cụm từ chính xác"</code></li>
         <li>Kết hợp Google Scholar, Semantic Scholar, và IEEE Xplore</li>
         <li>Áp dụng bộ lọc năm xuất bản và số lượng trích dẫn</li>
       </ul>
-
-      <div class="highlight-box">
-        Ví dụ truy vấn: <em>site:arxiv.org "transformer" "image machine translation" filetype:pdf 2023..2025</em> — tìm được các bài báo mới nhất về Vision-Language Models.
-      </div>
-
+      <div class="highlight-box">Ví dụ truy vấn: <em>site:arxiv.org "transformer" "image machine translation" filetype:pdf 2023..2025</em> — tìm được các bài báo mới nhất về Vision-Language Models.</div>
       <h4>Đánh giá nguồn</h4>
       <p>Phân tích độ tin cậy của mỗi nguồn dựa trên: tác giả, tổ chức, năm xuất bản, chỉ số trích dẫn và peer-review. Phân biệt rõ nguồn sơ cấp và thứ cấp.</p>
     </div>
   </div>
 
-  <!-- TASK 3 -->
   <div class="detail-block fade-in" id="task3">
     <div class="detail-meta">
       <div class="detail-badge">Tuần 3 · Nhiệm vụ 03</div>
@@ -840,20 +1038,14 @@
         <li><strong>Tác vụ 2:</strong> Giải thích khái niệm phức tạp theo mức độ nhận thức</li>
         <li><strong>Tác vụ 3:</strong> Phân tích và phê bình luận điểm khoa học</li>
       </ul>
-
       <h4>Nguyên tắc áp dụng</h4>
       <p>Mỗi Prompt cải tiến được xây dựng theo cấu trúc: <strong>Vai trò → Bối cảnh → Nhiệm vụ → Định dạng đầu ra → Ràng buộc</strong>. So sánh kết quả trước và sau để đánh giá hiệu quả.</p>
-
-      <div class="highlight-box">
-        Kỹ thuật nổi bật: <em>Chain-of-Thought prompting</em> giúp AI triển khai lập luận theo từng bước logic, tăng đáng kể chất lượng phân tích so với prompt đơn giản.
-      </div>
-
+      <div class="highlight-box">Kỹ thuật nổi bật: <em>Chain-of-Thought prompting</em> giúp AI triển khai lập luận theo từng bước logic, tăng đáng kể chất lượng phân tích so với prompt đơn giản.</div>
       <h4>Kết quả so sánh</h4>
       <p>Prompt được tối ưu hóa tạo ra kết quả cụ thể, có cấu trúc rõ ràng và phù hợp với mục tiêu học tập hơn hẳn phiên bản ban đầu. Phân tích sâu về cơ chế attention của LLM được đề cập trong báo cáo.</p>
     </div>
   </div>
 
-  <!-- TASK 4 -->
   <div class="detail-block fade-in" id="task4">
     <div class="detail-meta">
       <div class="detail-badge">Tuần 4 · Nhiệm vụ 04</div>
@@ -863,7 +1055,6 @@
     <div class="detail-content">
       <h4>Dự án: BidApp</h4>
       <p>Phát triển ứng dụng đấu giá trực tuyến. Vai trò: <strong>Business Analyst &amp; Quản lý Tài liệu</strong>.</p>
-
       <h4>Công cụ và quy trình</h4>
       <ul>
         <li>Sử dụng công cụ quản lý dự án nhóm để lập kế hoạch và phân công</li>
@@ -871,14 +1062,10 @@
         <li>Phối hợp tài liệu trực tuyến theo thời gian thực</li>
         <li>Tích hợp các tính năng nâng cao để tối ưu hóa quy trình làm việc nhóm</li>
       </ul>
-
-      <div class="highlight-box">
-        Phân tích điểm mạnh/điểm yếu của từng công cụ trong bối cảnh dự án thực tế: tốc độ phản hồi, khả năng theo dõi lịch sử thay đổi, và tính năng tích hợp.
-      </div>
+      <div class="highlight-box">Phân tích điểm mạnh/điểm yếu của từng công cụ trong bối cảnh dự án thực tế: tốc độ phản hồi, khả năng theo dõi lịch sử thay đổi, và tính năng tích hợp.</div>
     </div>
   </div>
 
-  <!-- TASK 5 -->
   <div class="detail-block fade-in" id="task5">
     <div class="detail-meta">
       <div class="detail-badge">Tuần 5 · Nhiệm vụ 05</div>
@@ -888,7 +1075,6 @@
     <div class="detail-content">
       <h4>Sản phẩm nội dung số</h4>
       <p>Bài thuyết trình hoàn chỉnh: <strong>"Hướng dẫn chuẩn hóa quy trình sử dụng Git cho dự án nhóm"</strong> — được hỗ trợ toàn diện bởi AI tạo sinh.</p>
-
       <h4>Quy trình sản xuất</h4>
       <ul>
         <li>Dùng AI để phác thảo cấu trúc nội dung và outline</li>
@@ -896,14 +1082,10 @@
         <li>Viết và chỉnh sửa script thuyết trình với sự hỗ trợ của LLM</li>
         <li>Biên tập và kiểm tra chất lượng cuối cùng</li>
       </ul>
-
-      <div class="highlight-box">
-        Kết quả: Slide deck chuyên nghiệp, rõ ràng và hấp dẫn về mặt thị giác — thể hiện khả năng tận dụng tối đa các công cụ AI tạo sinh trong sản xuất nội dung số.
-      </div>
+      <div class="highlight-box">Kết quả: Slide deck chuyên nghiệp, rõ ràng và hấp dẫn về mặt thị giác — thể hiện khả năng tận dụng tối đa các công cụ AI tạo sinh trong sản xuất nội dung số.</div>
     </div>
   </div>
 
-  <!-- TASK 6 -->
   <div class="detail-block fade-in" id="task6">
     <div class="detail-meta">
       <div class="detail-badge">Tuần 6 · Nhiệm vụ 06</div>
@@ -913,7 +1095,6 @@
     <div class="detail-content">
       <h4>Bối cảnh nghiên cứu</h4>
       <p>Sự bùng nổ của các mô hình Ngôn ngữ Lớn (LLMs) như <strong>ChatGPT, Gemini và Claude</strong> đã mang lại những thay đổi bước ngoặt trong giáo dục đại học.</p>
-
       <h4>Bộ nguyên tắc cá nhân (Tóm tắt)</h4>
       <ul>
         <li>Luôn kiểm chứng độc lập kết quả AI trước khi sử dụng</li>
@@ -924,44 +1105,37 @@
         <li>Ưu tiên sử dụng AI như công cụ hỗ trợ, không phải thẩm quyền</li>
         <li>Đặt câu hỏi phê phán với mọi kết quả AI tạo ra</li>
       </ul>
-
-      <div class="highlight-box">
-        Tư duy phản biện: Phân tích sâu các thách thức đạo đức như hallucination, copyright, over-reliance, và đề xuất giải pháp thực tiễn cho sinh viên.
-      </div>
+      <div class="highlight-box">Tư duy phản biện: Phân tích sâu các thách thức đạo đức như hallucination, copyright, over-reliance, và đề xuất giải pháp thực tiễn cho sinh viên.</div>
     </div>
   </div>
 </section>
 
 <!-- REFLECTION -->
-<section id="reflection">
+<section id="reflection" class="reflection-section">
   <div class="section-header fade-in">
     <span class="section-num">04</span>
     <h2 class="section-title">Tổng kết &amp; Đánh giá</h2>
     <div class="section-rule"></div>
   </div>
-
-  <div class="reflection-grid fade-in">
-    <div class="reflection-card">
+  <div class="reflection-grid">
+    <div class="reflection-card fade-in">
       <span class="reflection-icon">🧠</span>
       <h3>Kiến thức đã học</h3>
       <p>Từ quản lý dữ liệu đến Prompt Engineering, tôi hiểu rõ hơn cách công nghệ số và AI có thể tăng cường năng lực học tập và nghiên cứu một cách có hệ thống.</p>
     </div>
-    <div class="reflection-card">
+    <div class="reflection-card fade-in">
       <span class="reflection-icon">🔧</span>
       <h3>Kỹ năng phát triển</h3>
       <p>Khả năng tìm kiếm thông tin học thuật, viết Prompt hiệu quả và sử dụng công cụ cộng tác nhóm được cải thiện đáng kể qua từng tuần thực hành.</p>
     </div>
-    <div class="reflection-card">
+    <div class="reflection-card fade-in">
       <span class="reflection-icon">🌱</span>
       <h3>Bài học kinh nghiệm</h3>
       <p>AI là công cụ mạnh mẽ nhưng cần sử dụng có trách nhiệm. Tư duy phê phán và kiểm chứng độc lập là không thể thiếu khi làm việc với các hệ thống AI.</p>
     </div>
   </div>
-
   <div class="big-quote fade-in">
-    <blockquote>
-      Công nghệ không thay thế tư duy — nó khuếch đại tư duy. Điều quan trọng là biết cách đặt câu hỏi đúng, không phải chỉ biết cách dùng công cụ.
-    </blockquote>
+    <blockquote>Công nghệ không thay thế tư duy — nó khuếch đại tư duy. Điều quan trọng là biết cách đặt câu hỏi đúng, không phải chỉ biết cách dùng công cụ.</blockquote>
     <cite>Lê Thế Linh · Tổng kết Dự án Cá nhân · 2025</cite>
   </div>
 </section>
@@ -976,15 +1150,14 @@
 </footer>
 
 <script>
-  // Intersection Observer for fade-in
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
         observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
