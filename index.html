@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio – Lê Thế Linh | 25020235</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f0e8;
+    --cream: #ede8dc;
+    --rust: #b5451b;
+    --gold: #c9a84c;
+    --slate: #4a5568;
+    --muted: #8a8070;
+    --line: rgba(15,14,13,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--rust); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 8rem 4rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 20vw, 22rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(15,14,13,0.06);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    max-width: 860px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--rust);
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--slate);
+    max-width: 560px;
+    margin: 0 auto 3rem;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--line);
+    color: var(--slate);
+    border-radius: 0;
+  }
+
+  .hero-scroll {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .scroll-line {
+    width: 1px; height: 48px; background: var(--muted);
+    animation: extend 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* ── SECTION COMMONS ── */
+  section {
+    position: relative;
+    padding: 7rem 4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--rust);
+    letter-spacing: 0.12em;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p { margin-bottom: 1.2rem; color: var(--slate); }
+  .about-text p:first-child { color: var(--ink); font-size: 1.2rem; font-weight: 400; }
+
+  .about-info {
+    display: flex; flex-direction: column; gap: 0;
+    border: 1px solid var(--line);
+  }
+
+  .info-row {
+    display: flex;
+    border-bottom: 1px solid var(--line);
+  }
+  .info-row:last-child { border-bottom: none; }
+
+  .info-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 1rem 1.2rem;
+    width: 140px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--line);
+    display: flex; align-items: center;
+  }
+
+  .info-value {
+    padding: 1rem 1.2rem;
+    font-size: 0.95rem;
+    color: var(--ink);
+    display: flex; align-items: center;
+  }
+
+  .info-value a {
+    color: var(--rust);
+    text-decoration: none;
+  }
+
+  .portfolio-goal {
+    margin-top: 2.5rem;
+    padding: 1.8rem;
+    background: var(--cream);
+    border-left: 3px solid var(--rust);
+  }
+
+  .portfolio-goal .goal-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 0.6rem;
+  }
+
+  .portfolio-goal p {
+    font-style: italic;
+    color: var(--slate) !important;
+    font-size: 1rem !important;
+    margin: 0 !important;
+  }
+
+  /* ── TASKS GRID ── */
+  .tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+
+  .task-card {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .task-card:nth-child(3n) { border-right: none; }
+  .task-card:nth-child(n+4) { border-bottom: none; }
+
+  .task-card:hover { background: var(--cream); }
+
+  .task-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .task-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+    line-height: 1;
+  }
+
+  .task-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
+  }
+
+  .task-desc {
+    font-size: 0.88rem;
+    color: var(--slate);
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+
+  .task-highlight {
+    display: flex; flex-direction: column; gap: 0.3rem;
+  }
+
+  .task-highlight span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 0.25rem 0.6rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .task-arrow {
+    font-size: 0.9rem;
+    color: var(--rust);
+    margin-top: 1.2rem;
+    display: block;
+    transition: transform 0.2s;
+  }
+
+  .task-card:hover .task-arrow { transform: translateX(4px); }
+
+  /* ── DETAIL SECTIONS ── */
+  .detail-block {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-block:last-child { border-bottom: none; }
+
+  .detail-meta {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .detail-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 0.8rem;
+  }
+
+  .detail-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .detail-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rust);
+    padding-bottom: 0.1rem;
+    transition: opacity 0.2s;
+  }
+
+  .detail-link:hover { opacity: 0.7; }
+
+  .detail-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    margin-top: 1.8rem;
+    color: var(--ink);
+  }
+
+  .detail-content h4:first-child { margin-top: 0; }
+
+  .detail-content p {
+    color: var(--slate);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .detail-content ul {
+    padding-left: 1.2rem;
+    color: var(--slate);
+    font-size: 0.95rem;
+  }
+
+  .detail-content li { margin-bottom: 0.4rem; }
+
+  .highlight-box {
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.4rem;
+    margin: 1.2rem 0;
+    font-style: italic;
+    color: var(--slate);
+    font-size: 0.95rem;
+  }
+
+  /* ── REFLECTION ── */
+  .reflection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+    margin-bottom: 4rem;
+  }
+
+  .reflection-card {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid var(--line);
+  }
+
+  .reflection-card:last-child { border-right: none; }
+
+  .reflection-icon { font-size: 1.5rem; margin-bottom: 1rem; display: block; }
+
+  .reflection-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .reflection-card p {
+    font-size: 0.9rem;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  .big-quote {
+    padding: 4rem;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    text-align: center;
+    position: relative;
+  }
+
+  .big-quote::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 10rem;
+    color: rgba(15,14,13,0.06);
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .big-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .big-quote cite {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .footer-right {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .tasks-grid { grid-template-columns: 1fr; }
+    .task-card { border-right: none !important; }
+    .task-card:last-child { border-bottom: none; }
+    .detail-block { grid-template-columns: 1fr; gap: 2rem; }
+    .detail-meta { position: static; }
+    .reflection-grid { grid-template-columns: 1fr; }
+    .reflection-card { border-right: none; border-bottom: 1px solid var(--line); }
+    .reflection-card:last-child { border-bottom: none; }
+    .big-quote { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">LTL · Portfolio Kỹ Thuật Số</div>
+  <ul class="nav-links">
+    <li><a href="#about">Giới thiệu</a></li>
+    <li><a href="#tasks">Dự án</a></li>
+    <li><a href="#details">Chi tiết</a></li>
+    <li><a href="#reflection">Tổng kết</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg-text">LTL</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Nhập môn Công nghệ số &amp; Ứng dụng Trí tuệ Nhân tạo</div>
+    <h1 class="hero-name">Lê Thế <em>Linh</em></h1>
+    <p class="hero-id">MSSV: 25020235</p>
+    <p class="hero-desc">
+      Portfolio Kỹ thuật số — hành trình học tập, khám phá và ứng dụng công nghệ số trong thế giới AI.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Quản lý tệp &amp; thư mục</span>
+      <span class="tag">Tìm kiếm học thuật</span>
+      <span class="tag">Prompt Engineering</span>
+      <span class="tag">Hợp tác trực tuyến</span>
+      <span class="tag">AI Sáng tạo nội dung</span>
+      <span class="tag">AI có trách nhiệm</span>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Cuộn xuống
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-in">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Giới thiệu</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p>Xin chào! Tôi là <strong>Lê Thế Linh</strong>, sinh viên ngành <strong>Khoa học Máy tính</strong> tại Đại học Quốc gia Hà Nội.</p>
+      <p>Portfolio này là tập hợp toàn bộ kết quả của môn học <em>Nhập môn Công nghệ số và Ứng dụng Trí tuệ Nhân tạo</em> — từ kỹ năng quản lý thông tin, tìm kiếm học thuật, viết Prompt hiệu quả, hợp tác nhóm trực tuyến, cho đến sáng tạo nội dung với AI và tư duy về đạo đức AI.</p>
+      <p>Mỗi bài tập là một bước trưởng thành, không chỉ về kỹ năng kỹ thuật mà còn về tư duy phê phán và trách nhiệm số.</p>
+
+      <div class="portfolio-goal">
+        <div class="goal-label">Mục tiêu Portfolio</div>
+        <p>Thể hiện các kỹ năng số đã học, lưu trữ sản phẩm cá nhân để dễ dàng truy cập và chia sẻ, tạo nền tảng giới thiệu năng lực bản thân trong tương lai.</p>
+      </div>
+    </div>
+
+    <div class="about-info fade-in">
+      <div class="info-row">
+        <span class="info-label">Họ và tên</span>
+        <span class="info-value">Lê Thế Linh</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">MSSV</span>
+        <span class="info-value" style="font-family:'DM Mono',monospace;font-size:0.85rem;">25020235</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Ngành học</span>
+        <span class="info-value">Khoa học Máy tính</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Môn học</span>
+        <span class="info-value">Nhập môn CNSX &amp; ƯDTTNT</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Số bài tập</span>
+        <span class="info-value">7 bài (Tuần 1–7)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Năm học</span>
+        <span class="info-value">2024–2025</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Báo cáo T1</span>
+        <span class="info-value"><a href="https://docs.google.com/document/d/1pOgMWMs8QVoI4exswHw1Re5Y3jsDlLWRNN3actwgpFM/edit?usp=sharing" target="_blank">Xem tài liệu →</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Báo cáo T6</span>
+        <span class="info-value"><a href="https://docs.google.com/document/d/10Aek0x58hKTcxfDbZgPyv5cLWXrah2MSe6jAQepBiTE/edit?usp=sharing" target="_blank">Xem tài liệu →</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TASKS OVERVIEW -->
+<section id="tasks">
+  <div class="section-header fade-in">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Các Nhiệm vụ Dự án</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="tasks-grid">
+    <a class="task-card fade-in" href="#task1">
+      <span class="task-num">TUẦN 1 · BÀI TẬP 01</span>
+      <span class="task-icon">🗂️</span>
+      <h3 class="task-title">Quản lý Tệp &amp; Thư mục</h3>
+      <p class="task-desc">Xây dựng cấu trúc thư mục khoa học và quy tắc đặt tên nhất quán cho dữ liệu cá nhân.</p>
+      <div class="task-highlight">
+        <span>Cấu trúc logic</span>
+        <span>Quy tắc đặt tên</span>
+        <span>File Explorer</span>
+      </div>
+      <span class="task-arrow">→ Xem chi tiết</span>
+    </a>
+
+    <a class="task-card fade-in" href="#task2">
+      <span class="task-num">TUẦN 2 · BÀI TẬP 02</span>
+      <span class="task-icon">🔍</span>
+      <h3 class="task-title">Tìm kiếm &amp; Đánh giá Thông tin</h3>
+      <p class="task-desc">Nghiên cứu ứng dụng kiến trúc Transformer trong dịch máy hình ảnh đa ngôn ngữ.</p>
+      <div class="task-highlight">
+        <span>Toán tử site: filetype:</span>
+        <span>Google Scholar</span>
+        <span>Đánh giá nguồn</span>
+      </div>
+      <span class="task-arrow">→ Xem chi tiết</span>
+    </a>
+
+    <a class="task-card fade-in" href="#task3">
+      <span class="task-num">TUẦN 3 · BÀI TẬP 03</span>
+      <span class="task-icon">✍️</span>
+      <h3 class="task-title">Viết Prompt Hiệu quả</h3>
+      <p class="task-desc">Tối ưu hóa Prompt cho 3 tác vụ học tập cốt lõi theo các giai đoạn nhận thức.</p>
+      <div class="task-highlight">
+        <span>Vai trò · Bối cảnh</span>
+        <span>So sánh kết quả</span>
+        <span>Prompt Engineering</span>
+      </div>
+      <span class="task-arrow">→ Xem chi tiết</span>
+    </a>
+
+    <a class="task-card fade-in" href="#task4">
+      <span class="task-num">TUẦN 4 · BÀI TẬP 04</span>
+      <span class="task-icon">🤝</span>
+      <h3 class="task-title">Hợp tác Trực tuyến</h3>
+      <p class="task-desc">Quản lý dự án BidApp với vai trò Business Analyst và quản lý tài liệu nhóm.</p>
+      <div class="task-highlight">
+        <span>Công cụ quản lý DA</span>
+        <span>Phân công &amp; tiến độ</span>
+        <span>Phối hợp nhóm</span>
+      </div>
+      <span class="task-arrow">→ Xem chi tiết</span>
+    </a>
+
+    <a class="task-card fade-in" href="#task5">
+      <span class="task-num">TUẦN 5 · BÀI TẬP 05</span>
+      <span class="task-icon">🎨</span>
+      <h3 class="task-title">Sáng tạo Nội dung với AI</h3>
+      <p class="task-desc">Tạo bài thuyết trình "Chuẩn hóa quy trình Git cho dự án nhóm" được hỗ trợ bởi AI sinh.</p>
+      <div class="task-highlight">
+        <span>AI tạo sinh</span>
+        <span>Slide deck</span>
+        <span>Quy trình sản xuất</span>
+      </div>
+      <span class="task-arrow">→ Xem chi tiết</span>
+    </a>
+
+    <a class="task-card fade-in" href="#task6">
+      <span class="task-num">TUẦN 6 · BÀI TẬP 06</span>
+      <span class="task-icon">⚖️</span>
+      <h3 class="task-title">AI Có Trách nhiệm</h3>
+      <p class="task-desc">Xây dựng bộ nguyên tắc cá nhân về sử dụng AI có đạo đức trong học thuật và nghiên cứu.</p>
+      <div class="task-highlight">
+        <span>Đạo đức AI</span>
+        <span>LLMs: ChatGPT · Gemini · Claude</span>
+        <span>Nguyên tắc cá nhân</span>
+      </div>
+      <span class="task-arrow">→ Xem chi tiết</span>
+    </a>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="details">
+  <div class="section-header fade-in">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Chi tiết Từng Nhiệm vụ</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <!-- TASK 1 -->
+  <div class="detail-block fade-in" id="task1">
+    <div class="detail-meta">
+      <div class="detail-badge">Tuần 1 · Nhiệm vụ 01</div>
+      <h3 class="detail-heading">Quản lý Tệp &amp; Thư mục</h3>
+      <a class="detail-link" href="https://docs.google.com/document/d/1pOgMWMs8QVoI4exswHw1Re5Y3jsDlLWRNN3actwgpFM/edit?usp=sharing" target="_blank">Xem báo cáo đầy đủ →</a>
+    </div>
+    <div class="detail-content">
+      <h4>Mô tả nhiệm vụ</h4>
+      <p>Thiết kế cấu trúc thư mục tối ưu và quy tắc đặt tên nhất quán cho dữ liệu cá nhân, thể hiện sự hiểu sâu về tổ chức thông tin số.</p>
+
+      <h4>Cấu trúc thư mục được thiết kế</h4>
+      <ul>
+        <li>Phân cấp theo năm học → học kỳ → môn học</li>
+        <li>Tách riêng thư mục bài tập, tài liệu tham khảo, và nộp bài</li>
+        <li>Sử dụng File Explorer trên Windows để minh họa</li>
+      </ul>
+
+      <div class="highlight-box">
+        Quy tắc đặt tên: <strong>YYYY-MM-DD_MônHọc_TênTệp_vX.ext</strong> — đảm bảo sắp xếp theo thời gian và phân biệt rõ phiên bản.
+      </div>
+
+      <h4>Kết quả đạt được</h4>
+      <p>Cấu trúc khoa học, quy tắc đặt tên sáng tạo và nhất quán; mô tả thể hiện sự hiểu sâu sắc về tổ chức dữ liệu (hướng tới Mức 4 của Rubric).</p>
+    </div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div class="detail-block fade-in" id="task2">
+    <div class="detail-meta">
+      <div class="detail-badge">Tuần 2 · Nhiệm vụ 02</div>
+      <h3 class="detail-heading">Tìm kiếm &amp; Đánh giá Thông tin</h3>
+      <a class="detail-link" href="https://docs.google.com/document/d/1sN3vvzdGauonwXYDnR0RWPmgZso8VCGSXXXhaeELYXM/edit?usp=sharing" target="_blank">Xem báo cáo đầy đủ →</a>
+    </div>
+    <div class="detail-content">
+      <h4>Chủ đề nghiên cứu</h4>
+      <p>Đánh giá hiệu quả của các mô hình dựa trên kiến trúc Transformer trong bài toán <strong>Dịch máy hình ảnh đa ngôn ngữ</strong> (Multilingual Machine Translation of Images).</p>
+
+      <h4>Chiến lược tìm kiếm</h4>
+      <ul>
+        <li>Sử dụng linh hoạt trên 4 toán tử: <code>site:</code>, <code>filetype:</code>, <code>intitle:</code>, <code>"cụm từ chính xác"</code></li>
+        <li>Kết hợp Google Scholar, Semantic Scholar, và IEEE Xplore</li>
+        <li>Áp dụng bộ lọc năm xuất bản và số lượng trích dẫn</li>
+      </ul>
+
+      <div class="highlight-box">
+        Ví dụ truy vấn: <em>site:arxiv.org "transformer" "image machine translation" filetype:pdf 2023..2025</em> — tìm được các bài báo mới nhất về Vision-Language Models.
+      </div>
+
+      <h4>Đánh giá nguồn</h4>
+      <p>Phân tích độ tin cậy của mỗi nguồn dựa trên: tác giả, tổ chức, năm xuất bản, chỉ số trích dẫn và peer-review. Phân biệt rõ nguồn sơ cấp và thứ cấp.</p>
+    </div>
+  </div>
+
+  <!-- TASK 3 -->
+  <div class="detail-block fade-in" id="task3">
+    <div class="detail-meta">
+      <div class="detail-badge">Tuần 3 · Nhiệm vụ 03</div>
+      <h3 class="detail-heading">Tối ưu hóa Prompt</h3>
+      <a class="detail-link" href="https://docs.google.com/document/d/1_Athkvfn8cMWAORc0_OFU76PZGGxCq0shRGsnDsFOd8/edit?usp=sharing" target="_blank">Xem báo cáo đầy đủ →</a>
+    </div>
+    <div class="detail-content">
+      <h4>Ba tác vụ được chọn</h4>
+      <ul>
+        <li><strong>Tác vụ 1:</strong> Tóm tắt tài liệu học thuật dài</li>
+        <li><strong>Tác vụ 2:</strong> Giải thích khái niệm phức tạp theo mức độ nhận thức</li>
+        <li><strong>Tác vụ 3:</strong> Phân tích và phê bình luận điểm khoa học</li>
+      </ul>
+
+      <h4>Nguyên tắc áp dụng</h4>
+      <p>Mỗi Prompt cải tiến được xây dựng theo cấu trúc: <strong>Vai trò → Bối cảnh → Nhiệm vụ → Định dạng đầu ra → Ràng buộc</strong>. So sánh kết quả trước và sau để đánh giá hiệu quả.</p>
+
+      <div class="highlight-box">
+        Kỹ thuật nổi bật: <em>Chain-of-Thought prompting</em> giúp AI triển khai lập luận theo từng bước logic, tăng đáng kể chất lượng phân tích so với prompt đơn giản.
+      </div>
+
+      <h4>Kết quả so sánh</h4>
+      <p>Prompt được tối ưu hóa tạo ra kết quả cụ thể, có cấu trúc rõ ràng và phù hợp với mục tiêu học tập hơn hẳn phiên bản ban đầu. Phân tích sâu về cơ chế attention của LLM được đề cập trong báo cáo.</p>
+    </div>
+  </div>
+
+  <!-- TASK 4 -->
+  <div class="detail-block fade-in" id="task4">
+    <div class="detail-meta">
+      <div class="detail-badge">Tuần 4 · Nhiệm vụ 04</div>
+      <h3 class="detail-heading">Hợp tác Trực tuyến</h3>
+      <a class="detail-link" href="https://docs.google.com/document/d/12N0FkAWJ2CbDUT8QiJASYMsGSi1gepzYLcK8pThKTt4/edit?usp=sharing" target="_blank">Xem báo cáo đầy đủ →</a>
+    </div>
+    <div class="detail-content">
+      <h4>Dự án: BidApp</h4>
+      <p>Phát triển ứng dụng đấu giá trực tuyến. Vai trò: <strong>Business Analyst &amp; Quản lý Tài liệu</strong>.</p>
+
+      <h4>Công cụ và quy trình</h4>
+      <ul>
+        <li>Sử dụng công cụ quản lý dự án nhóm để lập kế hoạch và phân công</li>
+        <li>Theo dõi tiến độ qua bảng Kanban và milestones</li>
+        <li>Phối hợp tài liệu trực tuyến theo thời gian thực</li>
+        <li>Tích hợp các tính năng nâng cao để tối ưu hóa quy trình làm việc nhóm</li>
+      </ul>
+
+      <div class="highlight-box">
+        Phân tích điểm mạnh/điểm yếu của từng công cụ trong bối cảnh dự án thực tế: tốc độ phản hồi, khả năng theo dõi lịch sử thay đổi, và tính năng tích hợp.
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 5 -->
+  <div class="detail-block fade-in" id="task5">
+    <div class="detail-meta">
+      <div class="detail-badge">Tuần 5 · Nhiệm vụ 05</div>
+      <h3 class="detail-heading">Sáng tạo Nội dung AI</h3>
+      <a class="detail-link" href="https://docs.google.com/document/d/1SiUbBawHWJTGj8ZAl1fjlNrHa2GgLBqXSr8PtaBauis/edit?usp=sharing" target="_blank">Xem báo cáo đầy đủ →</a>
+    </div>
+    <div class="detail-content">
+      <h4>Sản phẩm nội dung số</h4>
+      <p>Bài thuyết trình hoàn chỉnh: <strong>"Hướng dẫn chuẩn hóa quy trình sử dụng Git cho dự án nhóm"</strong> — được hỗ trợ toàn diện bởi AI tạo sinh.</p>
+
+      <h4>Quy trình sản xuất</h4>
+      <ul>
+        <li>Dùng AI để phác thảo cấu trúc nội dung và outline</li>
+        <li>Tạo hình ảnh minh họa bằng công cụ AI sinh ảnh</li>
+        <li>Viết và chỉnh sửa script thuyết trình với sự hỗ trợ của LLM</li>
+        <li>Biên tập và kiểm tra chất lượng cuối cùng</li>
+      </ul>
+
+      <div class="highlight-box">
+        Kết quả: Slide deck chuyên nghiệp, rõ ràng và hấp dẫn về mặt thị giác — thể hiện khả năng tận dụng tối đa các công cụ AI tạo sinh trong sản xuất nội dung số.
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK 6 -->
+  <div class="detail-block fade-in" id="task6">
+    <div class="detail-meta">
+      <div class="detail-badge">Tuần 6 · Nhiệm vụ 06</div>
+      <h3 class="detail-heading">AI Có Trách nhiệm</h3>
+      <a class="detail-link" href="https://docs.google.com/document/d/10Aek0x58hKTcxfDbZgPyv5cLWXrah2MSe6jAQepBiTE/edit?usp=sharing" target="_blank">Xem báo cáo đầy đủ →</a>
+    </div>
+    <div class="detail-content">
+      <h4>Bối cảnh nghiên cứu</h4>
+      <p>Sự bùng nổ của các mô hình Ngôn ngữ Lớn (LLMs) như <strong>ChatGPT, Gemini và Claude</strong> đã mang lại những thay đổi bước ngoặt trong giáo dục đại học.</p>
+
+      <h4>Bộ nguyên tắc cá nhân (Tóm tắt)</h4>
+      <ul>
+        <li>Luôn kiểm chứng độc lập kết quả AI trước khi sử dụng</li>
+        <li>Trích dẫn rõ ràng khi sử dụng nội dung do AI hỗ trợ tạo ra</li>
+        <li>Không sử dụng AI để thay thế hoàn toàn quá trình tư duy cá nhân</li>
+        <li>Nhận thức về bias của mô hình và giới hạn kiến thức</li>
+        <li>Bảo vệ quyền riêng tư khi nhập liệu vào các hệ thống AI</li>
+        <li>Ưu tiên sử dụng AI như công cụ hỗ trợ, không phải thẩm quyền</li>
+        <li>Đặt câu hỏi phê phán với mọi kết quả AI tạo ra</li>
+      </ul>
+
+      <div class="highlight-box">
+        Tư duy phản biện: Phân tích sâu các thách thức đạo đức như hallucination, copyright, over-reliance, và đề xuất giải pháp thực tiễn cho sinh viên.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECTION -->
+<section id="reflection">
+  <div class="section-header fade-in">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Tổng kết &amp; Đánh giá</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="reflection-grid fade-in">
+    <div class="reflection-card">
+      <span class="reflection-icon">🧠</span>
+      <h3>Kiến thức đã học</h3>
+      <p>Từ quản lý dữ liệu đến Prompt Engineering, tôi hiểu rõ hơn cách công nghệ số và AI có thể tăng cường năng lực học tập và nghiên cứu một cách có hệ thống.</p>
+    </div>
+    <div class="reflection-card">
+      <span class="reflection-icon">🔧</span>
+      <h3>Kỹ năng phát triển</h3>
+      <p>Khả năng tìm kiếm thông tin học thuật, viết Prompt hiệu quả và sử dụng công cụ cộng tác nhóm được cải thiện đáng kể qua từng tuần thực hành.</p>
+    </div>
+    <div class="reflection-card">
+      <span class="reflection-icon">🌱</span>
+      <h3>Bài học kinh nghiệm</h3>
+      <p>AI là công cụ mạnh mẽ nhưng cần sử dụng có trách nhiệm. Tư duy phê phán và kiểm chứng độc lập là không thể thiếu khi làm việc với các hệ thống AI.</p>
+    </div>
+  </div>
+
+  <div class="big-quote fade-in">
+    <blockquote>
+      Công nghệ không thay thế tư duy — nó khuếch đại tư duy. Điều quan trọng là biết cách đặt câu hỏi đúng, không phải chỉ biết cách dùng công cụ.
+    </blockquote>
+    <cite>Lê Thế Linh · Tổng kết Dự án Cá nhân · 2025</cite>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div>Lê Thế Linh · MSSV 25020235</div>
+    <div style="margin-top:0.3rem;">Nhập môn Công nghệ số &amp; ƯDTTNT · 2024–2025</div>
+  </div>
+  <div class="footer-right">Portfolio Kỹ thuật số — Digital Portfolio</div>
+</footer>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
